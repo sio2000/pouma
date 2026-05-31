@@ -8,8 +8,13 @@ export async function GET() {
     return NextResponse.json({ error: "Μη εξουσιοδοτημένο." }, { status: 401 });
   }
 
-  const contacts = await getContacts();
-  return NextResponse.json(contacts);
+  try {
+    const contacts = await getContacts();
+    return NextResponse.json(contacts);
+  } catch (err) {
+    console.error("[GET /api/contacts]", err);
+    return NextResponse.json({ error: "Αποτυχία φόρτωσης αιτημάτων." }, { status: 500 });
+  }
 }
 
 export async function PATCH(request: Request) {

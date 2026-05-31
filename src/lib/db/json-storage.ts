@@ -1,10 +1,24 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+function isNetlifyRuntime() {
+  return (
+    process.env.NETLIFY === "true" ||
+    process.env.NETLIFY_DEV === "true" ||
+    Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME)
+  );
+}
+
+function getFileDataDir() {
+  if (isNetlifyRuntime()) {
+    return path.join("/tmp", "pouma-data");
+  }
+  return path.join(process.cwd(), "data");
+}
 
 export function useNetlifyBlobs() {
-  return process.env.NETLIFY === "true";
+  if (process.env.USE_FILE_STORAGE === "true") return false;
+  return isNetlifyRuntime();
 }
 
 async function getDataStore() {
@@ -13,7 +27,29 @@ async function getDataStore() {
 }
 
 async function ensureDataDir() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
+  await fs.mkdir(getFileDataDir(), { recursive: true });
+}
+
+async function readJsonFromDisk<T>(filename: string, fallback: T): Promise<T> {
+  await ensureDataDir();
+  const filePath = path.join(getFileDataDir(), filename);
+  try {
+    const raw = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(raw) as T;
+  } catch {
+    try {
+      await fs.writeFile(filePath, JSON.stringify(fallback, null, 2), "utf-8");
+    } catch {
+      // Read-only or ephemeral FS — return fallback without failing the request.
+    }
+    return fallback;
+  }
+}
+
+async function writeJsonToDisk<T>(filename: string, data: T): Promise<void> {
+  await ensureDataDir();
+  const filePath = path.join(getFileDataDir(), filename);
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
 }
 
 export async function readJsonFile<T>(filename: string, fallback: T): Promise<T> {
@@ -22,34 +58,33 @@ export async function readJsonFile<T>(filename: string, fallback: T): Promise<T>
       const store = await getDataStore();
       const data = await store.get(filename, { type: "json" });
       if (data === null) {
-        await store.setJSON(filename, fallback);
+        try {
+          await store.setJSON(filename, fallback);
+        } catch {
+          // Blobs unavailable — fall through to disk.
+          return readJsonFromDisk(filename, fallback);
+        }
         return fallback;
       }
       return data as T;
     } catch {
-      return fallback;
+      return readJsonFromDisk(filename, fallback);
     }
   }
 
-  await ensureDataDir();
-  const filePath = path.join(DATA_DIR, filename);
-  try {
-    const raw = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
-    await fs.writeFile(filePath, JSON.stringify(fallback, null, 2), "utf-8");
-    return fallback;
-  }
+  return readJsonFromDisk(filename, fallback);
 }
 
 export async function writeJsonFile<T>(filename: string, data: T): Promise<void> {
   if (useNetlifyBlobs()) {
-    const store = await getDataStore();
-    await store.setJSON(filename, data);
-    return;
+    try {
+      const store = await getDataStore();
+      await store.setJSON(filename, data);
+      return;
+    } catch {
+      // Blobs unavailable — persist under /tmp for this instance.
+    }
   }
 
-  await ensureDataDir();
-  const filePath = path.join(DATA_DIR, filename);
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+  await writeJsonToDisk(filename, data);
 }

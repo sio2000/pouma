@@ -9,10 +9,15 @@ import { randomUUID } from "crypto";
 const VALID_TYPES: ResourceType[] = RESOURCE_TYPES;
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const all = searchParams.get("all") === "1" && (await isAdminAuthenticated());
-  const resources = await getResources(all);
-  return NextResponse.json(resources);
+  try {
+    const { searchParams } = new URL(request.url);
+    const all = searchParams.get("all") === "1" && (await isAdminAuthenticated());
+    const resources = await getResources(all);
+    return NextResponse.json(resources);
+  } catch (err) {
+    console.error("[GET /api/resources]", err);
+    return NextResponse.json({ error: "Αποτυχία φόρτωσης υλικού." }, { status: 500 });
+  }
 }
 
 async function createResource(input: {
