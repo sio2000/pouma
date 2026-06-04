@@ -793,13 +793,9 @@ export default function AdminDashboard() {
                   <p className="text-[11px] font-bold text-lav-600 uppercase tracking-[0.22em] mb-4">
                     Υπό κατασκευή
                   </p>
-                  <h2 className="font-display text-2xl md:text-3xl text-plum mb-4 leading-snug">
+                  <h2 className="font-display text-2xl md:text-3xl text-plum mb-8 leading-snug">
                     Το εργαλείο Workshops είναι σε εξέλιξη
                   </h2>
-                  <p className="text-plum/50 text-sm md:text-base leading-relaxed max-w-md mx-auto mb-8">
-                    Σύντομα θα μπορείς να δημοσιεύεις, να επεξεργάζεσαι και να διαχειρίζεσαι τα workshops της
-                    καθηγήτριας απευθείας από εδώ — ημερομηνίες, θέσεις, περιγραφές και υλικό συμμετεχόντων.
-                  </p>
                   <div className="inline-flex flex-col sm:flex-row items-center gap-3 text-xs text-plum/40">
                     <span className="px-4 py-2 rounded-full bg-lav-50 border border-lav-100">
                       Προγραμματισμός sessions
