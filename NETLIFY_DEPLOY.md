@@ -35,7 +35,7 @@
 
 Τοπικά (`npm run dev`) συνεχίζει να γράφει στον φάκελο `data/` και `public/uploads/`.
 
-Ανεβασμένες εικόνες/PDF σερβίρονται από `/api/uploads/resources/...` (Netlify Blobs `pouma-uploads`). Μετά από deploy διορθώσεων, **ξανανέβασε** τα αρχεία από το admin αν δεν εμφανίζονται (τα παλιά μπορεί να μην είχαν αποθηκευτεί σωστά στο blob).
+Ανεβασμένες εικόνες/PDF αποθηκεύονται στο blob store `pouma-data` (κλειδιά `uploads/...`) μέσω `setJSON` — θα τα βλέπεις στο Netlify → Blobs → `pouma-data` δίπλα στο `resources.json`. Μέγιστο μέγεθος αρχείου στο production: **4MB**. Μετά deploy, **ξανανέβασε** κάθε εικόνα από το admin.
 
 ## 5. Custom domain
 

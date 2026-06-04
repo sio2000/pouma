@@ -3,7 +3,7 @@ import path from "path";
 import { UPLOAD_API_PREFIX } from "@/lib/upload-url";
 import { filenameFromUploadUrl } from "@/lib/db/upload-storage";
 import { useNetlifyBlobs } from "@/lib/db/runtime-env";
-import { deleteUploadFromBlob, writeUploadToBlob } from "@/lib/db/upload-blob";
+import { deleteUploadFromBlob, MAX_BLOB_UPLOAD_BYTES, writeUploadToBlob } from "@/lib/db/upload-blob";
 
 function getLocalUploadDir() {
   return path.join(process.cwd(), "public", "uploads", "resources");
@@ -57,6 +57,11 @@ export async function saveResourceFile(
   const thumbnailUrl = mime.startsWith("image/") ? fileUrl : undefined;
 
   if (useNetlifyBlobs()) {
+    if (buffer.length > MAX_BLOB_UPLOAD_BYTES) {
+      throw new Error(
+        `Στο production το μέγιστο μέγεθος αρχείου είναι ${Math.round(MAX_BLOB_UPLOAD_BYTES / (1024 * 1024))}MB.`
+      );
+    }
     await writeUploadToBlob(filename, buffer, mime);
     return { fileUrl, thumbnailUrl };
   }

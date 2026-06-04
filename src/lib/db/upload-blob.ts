@@ -6,6 +6,16 @@ import {
   uploadKeyFromFilename,
 } from "@/lib/db/upload-storage";
 
+/** Stored via setJSON — same API as resources.json (proven on Netlify). */
+type StoredUploadJson = {
+  v: 1;
+  contentType: string;
+  data: string;
+};
+
+/** Netlify Blobs JSON entries are limited; keep raw file under ~4MB. */
+export const MAX_BLOB_UPLOAD_BYTES = 4 * 1024 * 1024;
+
 function guessContentType(filename: string): string {
   const ext = filename.split(".").pop()?.toLowerCase();
   if (ext === "pdf") return "application/pdf";
@@ -35,7 +45,37 @@ async function blobToBuffer(data: unknown): Promise<Buffer | null> {
   return null;
 }
 
-async function readFromStore(
+function parseStoredJson(raw: unknown, filename: string): { body: Buffer; contentType: string } | null {
+  if (!raw || typeof raw !== "object") return null;
+  const record = raw as StoredUploadJson;
+  if (record.v !== 1 || !record.data) return null;
+  try {
+    const body = Buffer.from(record.data, "base64");
+    if (!body.length) return null;
+    return {
+      body,
+      contentType: record.contentType || guessContentType(filename),
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function readJsonFromStore(
+  store: Awaited<ReturnType<typeof getUploadStore>>,
+  key: string,
+  filename: string
+): Promise<{ body: Buffer; contentType: string } | null> {
+  try {
+    const raw = await store.get(key, { type: "json" });
+    return parseStoredJson(raw, filename);
+  } catch {
+    return null;
+  }
+}
+
+/** Legacy binary blob entries */
+async function readBinaryFromStore(
   store: Awaited<ReturnType<typeof getUploadStore>>,
   key: string,
   filename: string
@@ -51,16 +91,14 @@ async function readFromStore(
       }
     }
   } catch {
-    // try plain get
+    // fall through
   }
 
   try {
     const raw = await store.get(key, { type: "arrayBuffer" });
-    if (raw) {
-      const body = await blobToBuffer(raw);
-      if (body?.length) {
-        return { body, contentType: guessContentType(filename) };
-      }
+    const body = await blobToBuffer(raw);
+    if (body?.length) {
+      return { body, contentType: guessContentType(filename) };
     }
   } catch {
     return null;
@@ -73,12 +111,21 @@ export async function readUploadFromBlob(
   filename: string
 ): Promise<{ body: Buffer; contentType: string } | null> {
   const primary = await getUploadStore();
-  const fromPrimary = await readFromStore(primary, uploadKeyFromFilename(filename), filename);
-  if (fromPrimary) return fromPrimary;
+  const key = uploadKeyFromFilename(filename);
+
+  const fromJson = await readJsonFromStore(primary, key, filename);
+  if (fromJson) return fromJson;
+
+  const fromBinary = await readBinaryFromStore(primary, key, filename);
+  if (fromBinary) return fromBinary;
 
   try {
     const legacy = await getLegacyUploadStore();
-    return await readFromStore(legacy, legacyUploadKeyFromFilename(filename), filename);
+    const legacyKey = legacyUploadKeyFromFilename(filename);
+    return (
+      (await readJsonFromStore(legacy, legacyKey, filename)) ??
+      (await readBinaryFromStore(legacy, legacyKey, filename))
+    );
   } catch {
     return null;
   }
@@ -89,25 +136,26 @@ export async function writeUploadToBlob(
   buffer: Buffer,
   contentType: string
 ): Promise<void> {
-  const store = await getUploadStore();
-  const arrayBuffer = buffer.buffer.slice(
-    buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength
-  ) as ArrayBuffer;
-
-  const key = uploadKeyFromFilename(filename);
-  await store.set(key, arrayBuffer, {
-    metadata: { contentType },
-  });
-
-  // Eventual consistency: brief retry before failing
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const verify = await readFromStore(store, key, filename);
-    if (verify?.body?.length) return;
-    await new Promise((r) => setTimeout(r, 150 * (attempt + 1)));
+  if (buffer.length > MAX_BLOB_UPLOAD_BYTES) {
+    throw new Error(
+      `Το αρχείο υπερβαίνει το όριο ${Math.round(MAX_BLOB_UPLOAD_BYTES / (1024 * 1024))}MB για αποθήκευση στο Netlify.`
+    );
   }
 
-  throw new Error("Η αποθήκευση του αρχείου απέτυχε — δοκίμασε ξανά.");
+  const store = await getUploadStore();
+  const key = uploadKeyFromFilename(filename);
+  const payload: StoredUploadJson = {
+    v: 1,
+    contentType,
+    data: buffer.toString("base64"),
+  };
+
+  await store.setJSON(key, payload);
+
+  const verify = await readJsonFromStore(store, key, filename);
+  if (!verify?.body?.length) {
+    throw new Error("Η αποθήκευση του αρχείου απέτυχε — δοκίμασε ξανά.");
+  }
 }
 
 export async function deleteUploadFromBlob(fileUrl?: string): Promise<void> {
