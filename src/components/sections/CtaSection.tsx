@@ -11,7 +11,7 @@ export default function CtaSection() {
   const inView = useInView(ref, { once: true, margin: "-12% 0px" });
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden bg-ivory">
+    <section className="relative py-16 md:py-20 px-6 overflow-hidden bg-ivory">
       {/* Dark inset card */}
       <div className="max-w-5xl mx-auto relative">
         {/* Actual dark card */}
@@ -23,7 +23,7 @@ export default function CtaSection() {
             <div className="absolute inset-0 dot-grid opacity-[0.04]" />
           </div>
 
-          <div className="relative z-10 text-center py-24 px-8 md:px-16">
+          <div className="relative z-10 text-center py-16 md:py-20 px-8 md:px-16">
             <motion.div
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}

@@ -1,5 +1,5 @@
 import HeroSection from "@/components/sections/HeroSection";
-import ScrollQuotes from "@/components/sections/ScrollQuotes";
+import { HomeSectionsWithQuotes } from "@/components/sections/ScatteredScrollQuotes";
 import DimitraVideosSection from "@/components/sections/DimitraVideosSection";
 import PhilosophySection from "@/components/sections/PhilosophySection";
 import PersonalizationSection from "@/components/sections/PersonalizationSection";
@@ -14,16 +14,17 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ScrollQuotes />
-      <DimitraVideosSection />
-      <PhilosophySection />
-      <PersonalizationSection />
-      <CommunicationSection />
-      <MethodSection />
-      <PumaStory />
-      <DifferenceSection />
-      <TestimonialsSection />
-      <CtaSection />
+      <HomeSectionsWithQuotes>
+        <CommunicationSection />
+        <MethodSection />
+        <PhilosophySection />
+        <PersonalizationSection />
+        <DimitraVideosSection />
+        <PumaStory />
+        <DifferenceSection />
+        <TestimonialsSection />
+        <CtaSection />
+      </HomeSectionsWithQuotes>
     </>
   );
 }

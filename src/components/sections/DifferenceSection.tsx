@@ -25,11 +25,11 @@ export default function DifferenceSection() {
   };
 
   return (
-    <section className="relative py-24 px-6 bg-ivory overflow-hidden">
+    <section className="relative py-16 md:py-20 px-6 bg-ivory overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-[0.016] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        <div ref={ref} className="max-w-2xl mb-20">
+        <div ref={ref} className="max-w-2xl mb-12">
           <motion.div
             initial={{ opacity: 0, x: -18 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}

@@ -11,14 +11,14 @@ export default function MethodSection() {
   const stages = t.raw("stages") as string[];
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden bg-section-elevated">
+    <section className="relative py-16 md:py-20 px-6 overflow-hidden bg-section-elevated">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-24 right-0 w-[480px] h-[480px] rounded-full bg-lav-100/60 blur-3xl" />
         <div className="absolute bottom-0 -left-16 w-80 h-80 rounded-full bg-gold-200/30 blur-3xl" />
       </div>
 
       <div ref={ref} className="max-w-5xl mx-auto relative z-10">
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 mb-5">
             <span className="w-8 h-px bg-gold-400/70" />
             <span className="text-eyebrow text-lav-600">{t("journeyLabel")}</span>

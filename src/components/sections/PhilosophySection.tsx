@@ -18,7 +18,7 @@ export default function PhilosophySection() {
   ];
 
   return (
-    <section ref={sRef} className="relative py-24 overflow-hidden bg-white">
+    <section ref={sRef} className="relative py-16 md:py-20 overflow-hidden bg-white">
       <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-48 -right-32 w-[600px] h-[600px] rounded-full bg-lav-50 blur-3xl opacity-90" />
         <div className="absolute -bottom-32 -left-20 w-96 h-96 rounded-full bg-gold-200/30 blur-3xl" />

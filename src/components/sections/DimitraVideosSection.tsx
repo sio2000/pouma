@@ -149,7 +149,7 @@ export default function DimitraVideosSection() {
   return (
     <section
       ref={ref}
-      className="relative py-20 md:py-24 overflow-hidden bg-gradient-to-b from-lav-50 via-lav-100/80 to-ivory-mid"
+      className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-b from-lav-50 via-lav-100/80 to-ivory-mid"
       aria-labelledby="dimitra-videos-heading"
     >
       <div className="absolute inset-0 pointer-events-none">
@@ -169,7 +169,7 @@ export default function DimitraVideosSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_LUXURY }}
-          className="text-center max-w-2xl mx-auto mb-14 md:mb-20"
+          className="text-center max-w-2xl mx-auto mb-10 md:mb-12"
         >
           <div className="rule-ornament mb-6 w-fit mx-auto">{t("label")}</div>
           <h2

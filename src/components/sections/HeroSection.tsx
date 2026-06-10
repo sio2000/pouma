@@ -121,7 +121,7 @@ export default function HeroSection() {
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity, scale }}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-28 pb-24"
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-28 pb-14"
       >
         <motion.p
           initial={{ opacity: 0, y: -10 }}
@@ -156,7 +156,7 @@ export default function HeroSection() {
                   delay: 0.35 + i * 0.12,
                   ease: EASE_LUXURY,
                 }}
-                className={`text-display-xl block text-[clamp(2.6rem,8vw,5.25rem)] ${
+                className={`text-display-xl block text-[clamp(2.35rem,7vw,4.65rem)] ${
                   i === 1 ? "text-gradient" : "text-plum"
                 }`}
               >

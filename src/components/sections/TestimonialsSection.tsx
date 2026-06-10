@@ -70,7 +70,7 @@ export default function TestimonialsSection() {
 
   return (
     <section
-      className="relative py-24 px-6 md:px-10 bg-white overflow-hidden"
+      className="relative py-16 md:py-20 px-6 md:px-10 bg-white overflow-hidden"
       onMouseEnter={pause}
       onMouseLeave={resume}
       aria-roledescription="carousel"
@@ -81,7 +81,7 @@ export default function TestimonialsSection() {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div ref={ref} className="text-center mb-16">
+        <div ref={ref} className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}

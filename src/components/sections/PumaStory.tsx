@@ -16,7 +16,7 @@ export default function PumaStory() {
   const paras = [t("p1"), t("p2"), t("p3"), t("p4"), t("p5")];
 
   return (
-    <section id="puma" ref={sRef} className="relative py-24 px-6 overflow-hidden bg-dark-section scroll-mt-24">
+    <section id="puma" ref={sRef} className="relative py-16 md:py-20 px-6 overflow-hidden bg-dark-section scroll-mt-24">
       {/* Orbs */}
       <motion.div style={{ y: orbY1 }} className="absolute -top-20 right-0 w-[550px] h-[550px] pointer-events-none">
         <div className="w-full h-full rounded-full bg-radial from-lav-600/28 via-lav-800/8 to-transparent blur-3xl" />

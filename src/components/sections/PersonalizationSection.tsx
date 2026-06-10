@@ -20,7 +20,7 @@ export default function PersonalizationSection() {
   ];
 
   return (
-    <section className="relative py-24 px-6 bg-ivory overflow-hidden">
+    <section className="relative py-16 md:py-20 px-6 bg-ivory overflow-hidden">
       <div className="absolute inset-0 pointer-events-none dot-grid opacity-[0.018]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
