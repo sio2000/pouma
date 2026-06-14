@@ -8,6 +8,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils";
 import PremiumButton from "@/components/ui/PremiumButton";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import LogoSparkle from "@/components/ui/LogoSparkle";
 import { X } from "lucide-react";
 import { EASE_LUXURY } from "@/lib/motion";
 
@@ -83,16 +84,17 @@ export default function Navbar() {
             <motion.div
               whileHover={{ scale: 1.05, rotate: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"
+              className="relative w-[3.75rem] h-[3.75rem] sm:w-[4.25rem] sm:h-[4.25rem] flex-shrink-0"
             >
               <Image
                 src="/finallogo.png"
                 alt="The Pouma Academy"
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 56px, 64px"
+                sizes="(max-width: 640px) 60px, 68px"
                 priority
               />
+              <LogoSparkle />
             </motion.div>
             <div className="block leading-tight min-w-0">
               <span className="font-display text-[15px] sm:text-base md:text-lg font-semibold text-lav-600 tracking-wide block leading-snug">
