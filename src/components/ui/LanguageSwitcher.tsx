@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,8 +26,7 @@ export default function LanguageSwitcher({ variant = "navbar" }: { variant?: Var
 
   const setLocale = (next: "el" | "en") => {
     if (next === locale) return;
-    const stripped = pathname.replace(`/${locale}`, "") || "/";
-    router.push(`/${next}${stripped === "/" ? "" : stripped}`);
+    router.replace(pathname, { locale: next });
   };
 
   const isMobile = variant === "mobile";

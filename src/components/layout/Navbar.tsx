@@ -62,14 +62,14 @@ export default function Navbar() {
     <>
       <motion.div
         style={{ opacity: bgOpacity }}
-        className="fixed top-0 left-0 right-0 z-40 h-20 pointer-events-none"
+        className="fixed top-0 left-0 right-0 z-40 h-[4.5rem] pointer-events-none"
         aria-hidden
       >
         <div className="h-full glass" />
       </motion.div>
       <motion.div
         style={{ opacity: borderOpacity }}
-        className="fixed top-20 left-0 right-0 z-40 h-px bg-gradient-to-r from-transparent via-lav-300/40 to-transparent pointer-events-none"
+        className="fixed top-[4.5rem] left-0 right-0 z-40 h-px bg-gradient-to-r from-transparent via-lav-300/40 to-transparent pointer-events-none"
         aria-hidden
       />
 
@@ -77,21 +77,21 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, ease: EASE_LUXURY }}
-        className="fixed top-0 left-0 right-0 z-50 h-20"
+        className="fixed top-0 left-0 right-0 z-50 h-[4.5rem]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-full flex items-center justify-between">
           <Link href={lp("/")} onClick={handleLogoClick} className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-1 sm:flex-initial sm:flex-shrink-0 max-w-[calc(100%-3.25rem)]">
             <motion.div
               whileHover={{ scale: 1.05, rotate: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="relative w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] flex-shrink-0"
+              className="relative w-[3.75rem] h-[3.75rem] sm:w-[4.25rem] sm:h-[4.25rem] flex-shrink-0"
             >
               <Image
                 src="/finallogo.png"
                 alt="The Pouma Academy"
                 fill
                 className="object-contain"
-                sizes="(max-width: 640px) 64px, 72px"
+                sizes="(max-width: 640px) 60px, 68px"
                 priority
               />
               <LogoSparkle />
@@ -172,9 +172,9 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "circle(0% at calc(100% - 52px) 40px)" }}
-            animate={{ opacity: 1, clipPath: "circle(160% at calc(100% - 52px) 40px)" }}
-            exit={{ opacity: 0, clipPath: "circle(0% at calc(100% - 52px) 40px)" }}
+            initial={{ opacity: 0, clipPath: "circle(0% at calc(100% - 52px) 36px)" }}
+            animate={{ opacity: 1, clipPath: "circle(160% at calc(100% - 52px) 36px)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at calc(100% - 52px) 36px)" }}
             transition={{ duration: 0.55, ease: EASE_LUXURY }}
             className="fixed inset-0 lg:hidden flex flex-col bg-plum-mid"
             style={{ zIndex: 55 }}
