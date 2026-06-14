@@ -4,32 +4,45 @@ import { useTranslations } from "next-intl";
 import { EASE_LUXURY } from "@/lib/motion";
 
 /**
- * "Reveal on scroll" band — exact replica of the fixed-background effect on
- * thepoumaacademy.com. The band is a partial-height strip (normal website shows
- * above and below it). Its background image is pinned to the viewport
- * (background-attachment: fixed), so as the foreground content scrolls over and
- * away, different parts of the image are progressively revealed. Falls back to a
- * normal scrolling background on touch devices (where fixed attachment is janky).
+ * "Reveal on scroll" band — fixed-background strip (like thepoumaacademy.com).
+ * The band is a partial-height strip (normal website shows above and below it).
+ * Its background — the large Pouma logo on a deep plum field — is pinned to the
+ * viewport (background-attachment: fixed), so as the foreground statement scrolls
+ * over and away, the logo is progressively revealed. Falls back to a normal
+ * scrolling background on touch devices (where fixed attachment is janky).
+ *
+ * Reusable: pass a different i18n `namespace` to render another identical band
+ * with its own copy.
  */
-export default function RevealStatement() {
-  const t = useTranslations("reveal");
+export default function RevealStatement({
+  namespace = "reveal",
+}: {
+  namespace?: string;
+}) {
+  const t = useTranslations(namespace);
 
   return (
     <section className="bg-ivory py-12 md:py-16">
       <div
-        className="relative w-full overflow-hidden h-[64vh] min-h-[440px] bg-cover bg-center bg-scroll lg:bg-fixed"
-        style={{ backgroundImage: "url('/reveal-bg.svg')" }}
+        className="relative w-full overflow-hidden h-[64vh] min-h-[440px] bg-scroll lg:bg-fixed"
+        style={{
+          backgroundColor: "var(--color-plum)",
+          backgroundImage: "url('/finallogo.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center 26%",
+          backgroundSize: "auto 150%",
+        }}
       >
         {/* accent divider lines, top & bottom */}
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-lav-400/70 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
 
-        {/* legibility overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-plum/70 via-plum/35 to-plum/80" />
+        {/* richness + legibility overlays (scroll with the strip) */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_36%,rgba(176,154,232,0.28)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-plum/72 via-plum/45 to-plum/85" />
         <div className="absolute inset-0 dot-grid opacity-[0.06] mix-blend-overlay pointer-events-none" />
 
-        {/* Foreground content — scrolls with the strip while the background stays
-            pinned, progressively revealing the artwork. */}
+        {/* Foreground content — scrolls with the strip while the logo stays pinned. */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -49,7 +62,7 @@ export default function RevealStatement() {
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-15% 0px" }}
               transition={{ duration: 0.9, delay: 0.1, ease: EASE_LUXURY }}
-              className="block text-white/95 text-[clamp(1.8rem,4.6vw,3.4rem)]"
+              className="block text-white/95 text-[clamp(1.8rem,4.6vw,3.4rem)] [text-shadow:0_2px_24px_rgba(20,11,40,0.6)]"
             >
               {t("line1")}
             </motion.span>
@@ -69,7 +82,7 @@ export default function RevealStatement() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: 0.9, delay: 0.42, ease: EASE_LUXURY }}
-            className="mt-6 max-w-xl text-white/75 text-base md:text-lg font-light leading-relaxed"
+            className="mt-6 max-w-xl text-white/80 text-base md:text-lg font-light leading-relaxed [text-shadow:0_1px_16px_rgba(20,11,40,0.55)]"
           >
             {t("sub")}
           </motion.p>
