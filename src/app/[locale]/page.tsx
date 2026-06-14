@@ -1,4 +1,7 @@
 import HeroSection from "@/components/sections/HeroSection";
+import IntroSection from "@/components/sections/IntroSection";
+import RevealStatement from "@/components/sections/RevealStatement";
+import RevealBridge from "@/components/sections/RevealBridge";
 import { HomeSectionsWithQuotes } from "@/components/sections/ScatteredScrollQuotes";
 import DimitraVideosSection from "@/components/sections/DimitraVideosSection";
 import PhilosophySection from "@/components/sections/PhilosophySection";
@@ -14,6 +17,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <IntroSection />
+      <RevealStatement namespace="reveal" />
+      <RevealBridge />
+      <RevealStatement namespace="reveal2" />
       <HomeSectionsWithQuotes>
         <CommunicationSection />
         <MethodSection />

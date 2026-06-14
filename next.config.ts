@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "**" }
     ]
+  },
+  turbopack: {
+    root: process.cwd()
   }
 };
 

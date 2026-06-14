@@ -41,12 +41,29 @@ export default function MethodSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.12 + i * 0.1, ease: EASE_LUXURY }}
-              className="relative rounded-2xl border border-lav-100 bg-white/90 backdrop-blur-sm p-6 shadow-soft hover:shadow-medium hover:border-lav-200 transition-all duration-400"
+              whileHover={{
+                y: -10,
+                scale: 1.04,
+                transition: { type: "spring", stiffness: 320, damping: 18 },
+              }}
+              className="group relative overflow-hidden rounded-2xl border border-lav-100 bg-white/90 backdrop-blur-sm p-6 shadow-soft cursor-default transition-[border-color,background-color,box-shadow] duration-300 hover:border-gold-400 hover:bg-gold-200/35 hover:shadow-gold-glow"
             >
-              <span className="font-display text-3xl text-gradient font-light leading-none">
+              {/* Gold sweep that wipes across on hover */}
+              <span
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold-300/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                aria-hidden
+              />
+              {/* Top accent bar grows in on hover */}
+              <span
+                className="pointer-events-none absolute left-0 top-0 h-[3px] w-full origin-left scale-x-0 bg-gradient-to-r from-gold-400 to-gold-300 transition-transform duration-400 ease-out group-hover:scale-x-100"
+                aria-hidden
+              />
+              <span className="method-num relative font-display text-3xl font-light leading-none">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p className="mt-4 text-plum font-medium text-base leading-snug">{stage}</p>
+              <p className="relative mt-4 font-medium text-base leading-snug text-plum transition-colors duration-300 group-hover:text-plum">
+                {stage}
+              </p>
             </motion.div>
           ))}
         </div>

@@ -38,6 +38,10 @@ html {
 }
 
 /* Preloader: hide site content until first visit animation completes */
+html.preloader-pending body {
+  overflow: hidden;
+}
+
 html.preloader-pending #site-content {
   visibility: hidden;
   pointer-events: none;
@@ -160,10 +164,10 @@ body {
 
 .bg-hero-canvas {
   background:
-    radial-gradient(ellipse 90% 70% at 50% -15%, color-mix(in srgb, var(--color-lav-300) 42%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 100% 80%, color-mix(in srgb, var(--color-gold-400) 18%, transparent) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 0% 60%, color-mix(in srgb, var(--color-lav-400) 20%, transparent) 0%, transparent 50%),
-    linear-gradient(180deg, #FEFCF9 0%, var(--color-ivory) 45%, var(--color-ivory-mid) 100%);
+    radial-gradient(ellipse 95% 75% at 50% -10%, color-mix(in srgb, var(--color-lav-300) 46%, transparent) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 45% at 100% 85%, color-mix(in srgb, var(--color-gold-400) 38%, transparent) 0%, transparent 52%),
+    radial-gradient(ellipse 50% 45% at 0% 55%, color-mix(in srgb, var(--color-lav-400) 34%, transparent) 0%, transparent 52%),
+    linear-gradient(180deg, #FEFCF9 0%, var(--color-ivory) 40%, var(--color-ivory-mid) 100%);
 }
 
 .bg-section-elevated {
@@ -236,6 +240,22 @@ body {
   flex: 0 0 32px;
   height: 1px;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-lav-500) 55%, transparent), transparent);
+}
+
+/* ── Method card number (gradient → gold on hover) ── */
+.method-num {
+  background: linear-gradient(128deg, var(--color-lav-600) 0%, var(--color-lav-400) 45%, var(--color-gold-400) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: filter 0.35s ease;
+}
+
+.group:hover .method-num {
+  background: linear-gradient(128deg, var(--color-gold-500) 0%, var(--color-gold-400) 50%, var(--color-gold-300) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ── Premium card ───────────────────────────────── */

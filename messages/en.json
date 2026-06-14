@@ -35,6 +35,47 @@
     "whyName": "why we named it The Pouma Academy",
     "scrollHint": "Discover"
   },
+  "intro": {
+    "eyebrow": "Why The Pouma Academy",
+    "headline1": "You know English.",
+    "headline2": "But you freeze the moment you have to speak.",
+    "lead": "I'm Dimitra. I don't teach you grammar one more time — I help you find your voice, express yourself with confidence, and claim the opportunities you deserve.",
+    "cards": [
+      {
+        "tag": "Who I am",
+        "title": "A communication coach — not another language school",
+        "desc": "19 years of teaching across Greece, Europe & the USA. A boutique academy that sees the person behind the language."
+      },
+      {
+        "tag": "Your problem",
+        "title": "You know the theory, but freeze when it matters",
+        "desc": "Meetings, interviews, presentations: you freeze, say \"yes\" and \"ok\", and lose opportunities because you can't express yourself the way you deserve."
+      },
+      {
+        "tag": "How I solve it",
+        "title": "Personalized coaching in groups of 3–4",
+        "desc": "We focus on expression and confidence — not endless exercises. You speak from day one, with material built around you."
+      }
+    ],
+    "cta": "Book a free intro"
+  },
+  "reveal": {
+    "eyebrow": "The Pouma Academy",
+    "line1": "Language is only the beginning.",
+    "line2": "What we build is your voice.",
+    "sub": "Confidence, presence, and the freedom to express yourself — in every room, at every opportunity."
+  },
+  "bridge": {
+    "eyebrow": "Think about it",
+    "line1": "Your talent already speaks.",
+    "line2": "It just needs the language for the world to hear it."
+  },
+  "reveal2": {
+    "eyebrow": "The method",
+    "line1": "Stop translating.",
+    "line2": "Start thinking in English.",
+    "sub": "When the language becomes instinct, confidence follows on its own."
+  },
   "scrollQuotes": {
     "q1": "\"I'm afraid to speak.\"",
     "q2": "\"I know more than I can express.\"",

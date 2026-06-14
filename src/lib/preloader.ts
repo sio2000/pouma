@@ -3,7 +3,7 @@ export const PRELOADER_STORAGE_KEY = "pouma-preloader-seen";
 export function hasSeenPreloader(): boolean {
   if (typeof window === "undefined") return false;
   try {
-    return sessionStorage.getItem(PRELOADER_STORAGE_KEY) === "1";
+    return localStorage.getItem(PRELOADER_STORAGE_KEY) === "1";
   } catch {
     return false;
   }
@@ -11,7 +11,7 @@ export function hasSeenPreloader(): boolean {
 
 export function markPreloaderSeen(): void {
   try {
-    sessionStorage.setItem(PRELOADER_STORAGE_KEY, "1");
+    localStorage.setItem(PRELOADER_STORAGE_KEY, "1");
   } catch {
     /* ignore storage failures */
   }

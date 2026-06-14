@@ -17,11 +17,11 @@ export default function CommunicationSection() {
   };
 
   return (
-    <section className="relative py-16 md:py-20 px-6 overflow-hidden bg-dark-section">
+    <section className="relative py-16 md:py-20 px-6 overflow-hidden bg-warm-mesh">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-lav-800/30 blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-gold-400/14 blur-3xl" />
-        <div className="absolute inset-0 dot-grid opacity-[0.04]" />
+        <div className="absolute -top-24 left-0 w-[480px] h-[480px] rounded-full bg-lav-200/40 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-gold-200/35 blur-3xl" />
+        <div className="absolute inset-0 dot-grid opacity-[0.05]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -32,8 +32,8 @@ export default function CommunicationSection() {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               className="inline-flex items-center gap-2 mb-8"
             >
-              <div className="w-6 h-px bg-lav-400" />
-              <span className="text-[11px] font-bold text-lav-300 tracking-[0.22em] uppercase">
+              <div className="w-6 h-px bg-gold-400/80" />
+              <span className="text-[11px] font-bold text-lav-600 tracking-[0.22em] uppercase">
                 {t("label")}
               </span>
             </motion.div>
@@ -43,7 +43,7 @@ export default function CommunicationSection() {
                 initial={{ y: 70, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display font-light text-4xl md:text-5xl text-white leading-[1.03] tracking-tight"
+                className="font-display font-light text-4xl md:text-5xl text-plum leading-[1.03] tracking-tight"
               >
                 {t("headline")}
               </motion.h2>
@@ -53,7 +53,7 @@ export default function CommunicationSection() {
                 initial={{ y: 70, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 1, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display font-light text-4xl md:text-5xl text-gold leading-[1.03] tracking-tight"
+                className="font-display font-light text-4xl md:text-5xl text-gradient leading-[1.03] tracking-tight"
               >
                 {t("headline2")}
               </motion.h2>
@@ -63,7 +63,7 @@ export default function CommunicationSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.32 }}
-              className="text-white/50 text-lg leading-relaxed max-w-md"
+              className="text-plum/65 text-lg leading-relaxed max-w-md"
             >
               {t("body")}
             </motion.p>
@@ -72,11 +72,10 @@ export default function CommunicationSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.42 }}
-              className="mt-7 border-l-2 border-gold-400/50 pl-5 font-display italic text-gold-300 text-lg md:text-xl leading-relaxed max-w-md"
+              className="mt-7 border-l-2 border-gold-400/70 pl-5 font-display italic text-lav-700 text-lg md:text-xl leading-relaxed max-w-md"
             >
               {t("quote")}
             </motion.p>
-
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -91,8 +90,8 @@ export default function CommunicationSection() {
                   onClick={() => handleClick(i)}
                   className={`group relative rounded-2xl border transition-all duration-400 overflow-hidden cursor-pointer select-none min-h-[3.25rem] ${
                     isOpen
-                      ? "bg-lav-900/60 border-lav-400/50 shadow-glow col-span-1 sm:col-span-2"
-                      : "bg-dark-elevated border-white/8 hover:border-lav-400/35 hover:bg-lav-900/40"
+                      ? "bg-white border-lav-300 shadow-medium col-span-1 sm:col-span-2"
+                      : "bg-white/85 border-lav-100 hover:border-lav-300 hover:bg-white hover:shadow-soft"
                   }`}
                   role="button"
                   tabIndex={0}
@@ -107,12 +106,12 @@ export default function CommunicationSection() {
                       <div className="flex items-center gap-3 min-w-0">
                         <div
                           className={`w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-300 ${
-                            isOpen ? "bg-gold-400" : "bg-gold-400/80"
+                            isOpen ? "bg-gold-500" : "bg-gold-400"
                           }`}
                         />
                         <span
                           className={`text-sm font-medium transition-colors duration-300 ${
-                            isOpen ? "text-white" : "text-white/65 group-hover:text-white/85"
+                            isOpen ? "text-plum" : "text-plum/70 group-hover:text-plum"
                           }`}
                         >
                           {skill.title}
@@ -121,7 +120,7 @@ export default function CommunicationSection() {
                       <motion.span
                         animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-lav-300/60 text-xs flex-shrink-0 mt-0.5"
+                        className="text-lav-500/70 text-xs flex-shrink-0 mt-0.5"
                         aria-hidden
                       >
                         ▾
@@ -137,7 +136,7 @@ export default function CommunicationSection() {
                           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="text-white/55 text-sm leading-relaxed pt-4 pl-4 border-l border-gold-400/30 mt-4">
+                          <p className="text-plum/65 text-sm leading-relaxed pt-4 pl-4 border-l border-gold-400/50 mt-4">
                             {skill.detail}
                           </p>
                         </motion.div>

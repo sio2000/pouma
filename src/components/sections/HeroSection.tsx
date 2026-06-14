@@ -31,7 +31,6 @@ export default function HeroSection() {
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.55], [1, 0.94]);
-  const ringRotate = useTransform(scrollYProgress, [0, 1], [0, 120]);
 
   useEffect(() => {
     const fn = (e: MouseEvent) => {
@@ -64,73 +63,78 @@ export default function HeroSection() {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-hero-canvas"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-        <motion.div style={{ x: orbX, y: orbY, rotate: ringRotate }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(90vw,820px)] h-[min(90vw,820px)]"
+        {/* Static color washes — pushed to corners, softer in center */}
+        <div className="absolute -top-[12%] -left-[12%] w-[48vw] h-[48vh] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(181,143,239,0.38)_0%,rgba(206,180,247,0.12)_42%,transparent_72%)] blur-[80px]" />
+        <div className="absolute -bottom-[8%] -right-[6%] w-[46vw] h-[46vh] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(245,179,53,0.42)_0%,rgba(255,217,120,0.14)_45%,transparent_72%)] blur-[68px]" />
+
+        {/* Center lift — keeps headline area airy, less purple */}
+        <div className="absolute top-[18%] left-1/2 -translate-x-1/2 w-[min(92vw,56rem)] h-[58vh] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(253,251,248,0.92)_0%,rgba(253,251,248,0.55)_45%,transparent_72%)] blur-[48px]" />
+
+        {/* Slow breathing aurora — visible ambient motion */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{ opacity: [0.55, 0.78, 0.55] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         >
           <motion.div
-            className="absolute inset-0 rounded-full border-2 border-lav-400/45"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[4%] left-[4%] w-[50vw] max-w-2xl h-[38vh] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(155,111,232,0.32)_0%,rgba(206,180,247,0.12)_50%,transparent_72%)] blur-[72px]"
+            animate={{ x: [0, 36, 0], y: [0, -20, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           />
-          <div className="absolute inset-[12%] rounded-full border border-lav-300/35" />
           <motion.div
-            className="absolute inset-[24%] rounded-full border border-gold-400/30"
-            animate={{ rotate: -360 }}
-            transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-[6%] right-[8%] w-[48vw] max-w-2xl h-[38vh] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(245,179,53,0.38)_0%,rgba(255,217,120,0.12)_48%,transparent_72%)] blur-[60px]"
+            animate={{ x: [0, -30, 0], y: [0, 16, 0] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
         </motion.div>
 
+        {/* Mouse-reactive spotlight — softer, higher up so it misses the headline */}
         <motion.div
           style={{ x: orbX, y: orbY }}
-          className="absolute -top-48 -left-48 w-[760px] h-[760px] rounded-full max-lg:scale-[0.55] max-lg:-top-32 max-lg:-left-32"
-          animate={{ opacity: [0.4, 0.72, 0.4] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-[22%] left-1/2 -translate-x-1/2 w-[78vw] h-[52vh]"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="w-full h-full rounded-full bg-[radial-gradient(circle,rgba(206,180,247,0.62)_0%,transparent_68%)] blur-3xl" />
+          <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(181,143,239,0.26)_0%,rgba(206,180,247,0.08)_55%,transparent_78%)] blur-[64px]" />
         </motion.div>
 
         <motion.div
           style={{ x: orbX2, y: orbY2 }}
-          className="absolute -bottom-44 -right-24 w-[580px] h-[580px] rounded-full max-lg:scale-[0.55] max-lg:-bottom-28 max-lg:-right-16"
-          animate={{ opacity: [0.15, 0.38, 0.15] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute -bottom-[10%] right-[-6%] w-[52vw] h-[46vh]"
+          animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
         >
-          <div className="w-full h-full rounded-full bg-[radial-gradient(circle,rgba(245,179,53,0.42)_0%,transparent_65%)] blur-3xl" />
+          <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(232,154,24,0.32)_0%,rgba(245,179,53,0.12)_52%,transparent_74%)] blur-[56px]" />
         </motion.div>
 
-        <motion.div
-          className="absolute top-[32%] right-[18%] w-44 h-44 rounded-full bg-lav-100/50 blur-[70px]"
-          animate={{ y: [-20, 20, -20], opacity: [0.2, 0.5, 0.2] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-
+        {/* Soft grid texture */}
         <div
-          className="absolute inset-0 opacity-[0.045]"
+          className="absolute inset-0 opacity-[0.07]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(99,68,173,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(99,68,173,0.35) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-            maskImage: "radial-gradient(ellipse 75% 65% at 50% 38%, black, transparent)",
+              "linear-gradient(rgba(111,68,196,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(111,68,196,0.28) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage:
+              "radial-gradient(ellipse 68% 58% at 50% 38%, black 0%, transparent 78%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 68% 58% at 50% 38%, black 0%, transparent 78%)",
           }}
         />
 
-        {/* Floating accent marks */}
         {[
-          { top: "18%", left: "12%", delay: 0 },
-          { top: "62%", right: "10%", delay: 1.2 },
-          { bottom: "22%", left: "20%", delay: 2.4 },
+          { top: "22%", left: "12%", delay: 0, color: "bg-lav-400/55" },
+          { top: "52%", right: "10%", delay: 1.6, color: "bg-gold-400/60" },
+          { top: "72%", left: "22%", delay: 0.8, color: "bg-lav-500/45" },
         ].map((pos, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 rounded-full bg-gold-400/60"
-            style={{ ...pos }}
-            animate={{ y: [0, -12, 0], opacity: [0.3, 0.8, 0.3] }}
-            transition={{ duration: 5 + i, repeat: Infinity, delay: pos.delay, ease: "easeInOut" }}
+            className={`absolute w-2 h-2 rounded-full ${pos.color} shadow-[0_0_12px_currentColor]`}
+            style={{ top: pos.top, left: pos.left, right: pos.right }}
+            animate={{ y: [0, -14, 0], opacity: [0.35, 0.75, 0.35] }}
+            transition={{ duration: 5.5 + i, repeat: Infinity, delay: pos.delay, ease: "easeInOut" }}
           />
         ))}
       </div>
-
-      <div className="absolute inset-0 dot-grid opacity-[0.025] pointer-events-none" aria-hidden />
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity, scale }}
@@ -169,7 +173,7 @@ export default function HeroSection() {
                   delay: 0.35 + i * 0.12,
                   ease: EASE_LUXURY,
                 }}
-                className={`text-display-xl block text-[clamp(2.35rem,7vw,4.65rem)] ${
+                className={`text-display-xl block text-[clamp(1.8rem,5vw,3.3rem)] ${
                   i === 1 ? "text-gradient" : "text-plum"
                 }`}
               >
