@@ -22,7 +22,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full">
+      <body className="min-h-full" suppressHydrationWarning>
         <div
           id="preloader-static"
           className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-plum-mid"

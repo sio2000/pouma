@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { EASE_LUXURY } from "@/lib/motion";
@@ -12,11 +12,21 @@ import {
 
 export default function Preloader() {
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  useLayoutEffect(() => {
+  // Determine visibility on first mount based on preloader state
+  useEffect(() => {
+    setMounted(true);
+
     if (hasSeenPreloader()) {
       setPreloaderReady();
       setVisible(false);
+      
+      // Hide static shell if it exists
+      const staticShell = document.getElementById("preloader-static");
+      if (staticShell) {
+        staticShell.style.display = "none";
+      }
       return;
     }
 
@@ -32,10 +42,19 @@ export default function Preloader() {
       markPreloaderSeen();
       setPreloaderReady();
       setVisible(false);
+      
+      // Hide static shell after animation
+      const staticShell = document.getElementById("preloader-static");
+      if (staticShell) {
+        staticShell.style.display = "none";
+      }
     }, 520);
 
     return () => clearTimeout(hideTimer);
   }, [visible]);
+
+  // Only render motion component after hydration
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
